@@ -12,3 +12,6 @@ export { ClaudeTooltip } from './basic/tooltip.js';
 export { ClaudeAvatar } from './basic/avatar.js';
 export { ClaudeDivider } from './layout/divider.js';
 export { ClaudeSkeleton } from './advanced/skeleton.js';
+export { ClaudeCard } from './layout/card.js';
+export { ClaudeModal } from './layout/modal.js';
+export { ClaudeTabs, ClaudeTab } from './layout/tabs.js';
