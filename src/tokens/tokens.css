@@ -1,0 +1,97 @@
+/*
+ * Claude Design System — Design Tokens
+ *
+ * Dark theme is the default.
+ * Light theme activates via [data-theme="light"].
+ */
+
+:host {
+  /* ─── Colors ─── */
+  --claude-bg-primary: #0D0D0D;
+  --claude-bg-secondary: #1A1A2E;
+  --claude-bg-elevated: #252538;
+  --claude-bg-hover: rgba(255, 255, 255, 0.05);
+  --claude-text-primary: #F5F0E8;
+  --claude-text-secondary: #8B8B9E;
+  --claude-text-tertiary: #5A5A6E;
+  --claude-accent: #E87B35;
+  --claude-accent-hover: #F59E4B;
+  --claude-accent-subtle: rgba(232, 123, 53, 0.12);
+  --claude-success: #34D399;
+  --claude-warning: #FBBF24;
+  --claude-error: #F87171;
+  --claude-info: #60A5FA;
+  --claude-border: rgba(255, 255, 255, 0.08);
+  --claude-border-strong: rgba(255, 255, 255, 0.15);
+
+  /* ─── Typography ─── */
+  --claude-font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --claude-font-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --claude-font-size-xs: 0.75rem;
+  --claude-font-size-sm: 0.875rem;
+  --claude-font-size-md: 1rem;
+  --claude-font-size-lg: 1.25rem;
+  --claude-font-size-xl: 1.5rem;
+  --claude-font-size-2xl: 2rem;
+  --claude-font-size-3xl: 3rem;
+  --claude-line-height-tight: 1.25;
+  --claude-line-height-normal: 1.5;
+  --claude-line-height-relaxed: 1.75;
+  --claude-font-weight-normal: 400;
+  --claude-font-weight-medium: 500;
+  --claude-font-weight-semibold: 600;
+  --claude-font-weight-bold: 700;
+
+  /* ─── Spacing (4px base) ─── */
+  --claude-space-1: 4px;
+  --claude-space-2: 8px;
+  --claude-space-3: 12px;
+  --claude-space-4: 16px;
+  --claude-space-5: 20px;
+  --claude-space-6: 24px;
+  --claude-space-8: 32px;
+  --claude-space-10: 40px;
+  --claude-space-12: 48px;
+  --claude-space-16: 64px;
+
+  /* ─── Border Radius ─── */
+  --claude-radius-sm: 6px;
+  --claude-radius-md: 12px;
+  --claude-radius-lg: 20px;
+  --claude-radius-full: 9999px;
+
+  /* ─── Shadows ─── */
+  --claude-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --claude-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --claude-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --claude-shadow-glow: 0 0 20px rgba(232, 123, 53, 0.3);
+
+  /* ─── Transitions ─── */
+  --claude-transition-fast: 150ms ease;
+  --claude-transition-normal: 250ms ease;
+  --claude-transition-slow: 400ms ease;
+}
+
+/* ─── Light Theme Overrides ─── */
+:host([data-theme="light"]) {
+  --claude-bg-primary: #FAF7F2;
+  --claude-bg-secondary: #F0EBE3;
+  --claude-bg-elevated: #FFFFFF;
+  --claude-bg-hover: rgba(0, 0, 0, 0.03);
+  --claude-text-primary: #1A1A1A;
+  --claude-text-secondary: #6B6B6B;
+  --claude-text-tertiary: #9B9B9B;
+  --claude-accent: #D4622B;
+  --claude-accent-hover: #E87B35;
+  --claude-accent-subtle: rgba(212, 98, 43, 0.08);
+  --claude-success: #059669;
+  --claude-warning: #D97706;
+  --claude-error: #DC2626;
+  --claude-info: #2563EB;
+  --claude-border: rgba(0, 0, 0, 0.08);
+  --claude-border-strong: rgba(0, 0, 0, 0.15);
+
+  --claude-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --claude-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --claude-shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
