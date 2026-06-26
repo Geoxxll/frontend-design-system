@@ -8,3 +8,6 @@ export { ClaudeTag } from './basic/tag.js';
 export { ClaudeInput } from './basic/input.js';
 export { ClaudeTextarea } from './basic/textarea.js';
 export { ClaudeToggle } from './basic/toggle.js';
+export { ClaudeCard } from './layout/card.js';
+export { ClaudeModal } from './layout/modal.js';
+export { ClaudeTabs, ClaudeTab } from './layout/tabs.js';
