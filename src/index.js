@@ -5,3 +5,6 @@ export { ClaudeButton } from './basic/button.js';
 export { ClaudeIcon } from './basic/icon.js';
 export { ClaudeBadge } from './basic/badge.js';
 export { ClaudeTag } from './basic/tag.js';
+export { ClaudeInput } from './basic/input.js';
+export { ClaudeTextarea } from './basic/textarea.js';
+export { ClaudeToggle } from './basic/toggle.js';
