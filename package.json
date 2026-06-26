@@ -1,0 +1,26 @@
+{
+  "name": "claude-design-system",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "./dist/claude-design-system.umd.js",
+  "module": "./dist/claude-design-system.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/claude-design-system.es.js",
+      "require": "./dist/claude-design-system.umd.js"
+    },
+    "./tokens.css": "./dist/tokens.css"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "devDependencies": {
+    "lit": "^3.2.0",
+    "vite": "^6.0.0"
+  }
+}
