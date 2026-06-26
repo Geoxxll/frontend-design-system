@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Claude Design System — Showcase</title>
+  <link rel="stylesheet" href="../dist/tokens.css" />
+  <script type="module" src="../dist/claude-design-system.es.js"></script>
+  <style>
+    /* ─── Reset ─── */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--claude-font-sans);
+      background: var(--claude-bg-primary);
+      color: var(--claude-text-primary);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* ─── Layout ─── */
+    .layout {
+      display: flex;
+      min-height: calc(100vh - 56px);
+    }
+
+    .content {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--claude-space-8) var(--claude-space-10);
+      max-width: 960px;
+    }
+
+    /* ─── Section styling ─── */
+    .section {
+      margin-bottom: var(--claude-space-16);
+    }
+
+    .section h2 {
+      font-family: var(--claude-font-sans);
+      font-size: var(--claude-font-size-2xl);
+      font-weight: var(--claude-font-weight-bold);
+      color: var(--claude-text-primary);
+      margin-bottom: var(--claude-space-2);
+      scroll-margin-top: 72px;
+    }
+
+    .section > p {
+      color: var(--claude-text-secondary);
+      font-size: var(--claude-font-size-md);
+      line-height: var(--claude-line-height-normal);
+      margin-bottom: var(--claude-space-6);
+    }
+
+    .section h3 {
+      font-size: var(--claude-font-size-lg);
+      font-weight: var(--claude-font-weight-semibold);
+      color: var(--claude-text-primary);
+      margin-bottom: var(--claude-space-3);
+      margin-top: var(--claude-space-6);
+    }
+
+    /* ─── Preview areas ─── */
+    .preview {
+      background: var(--claude-bg-secondary);
+      border: 1px solid var(--claude-border);
+      border-radius: var(--claude-radius-md);
+      padding: var(--claude-space-6);
+      margin-bottom: var(--claude-space-6);
+    }
+
+    .preview-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: var(--claude-space-3);
+      margin-bottom: var(--claude-space-4);
+    }
+
+    .preview-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .preview-label {
+      font-size: var(--claude-font-size-xs);
+      color: var(--claude-text-tertiary);
+      font-weight: var(--claude-font-weight-medium);
+      min-width: 80px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── Props Table ─── */
+    .props-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--claude-font-size-sm);
+      margin-top: var(--claude-space-4);
+    }
+
+    .props-table th,
+    .props-table td {
+      text-align: left;
+      padding: var(--claude-space-2) var(--claude-space-3);
+      border-bottom: 1px solid var(--claude-border);
+    }
+
+    .props-table th {
+      color: var(--claude-text-secondary);
+      font-weight: var(--claude-font-weight-semibold);
+      font-size: var(--claude-font-size-xs);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .props-table td {
+      color: var(--claude-text-primary);
+    }
+
+    .props-table code {
+      font-family: var(--claude-font-mono);
+      font-size: var(--claude-font-size-xs);
+      background: var(--claude-bg-hover);
+      padding: 2px 6px;
+      border-radius: var(--claude-radius-sm);
+      color: var(--claude-accent);
+    }
+
+    /* ─── Color swatch grid ─── */
+    .color-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: var(--claude-space-4);
+    }
+
+    .color-swatch {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--claude-space-2);
+    }
+
+    .color-box {
+      width: 100%;
+      height: 60px;
+      border-radius: var(--claude-radius-sm);
+      border: 1px solid var(--claude-border-strong);
+    }
+
+    .color-name {
+      font-family: var(--claude-font-mono);
+      font-size: var(--claude-font-size-xs);
+      color: var(--claude-text-tertiary);
+      text-align: center;
+      word-break: break-all;
+    }
+
+    /* ─── Typography samples ─── */
+    .type-row {
+      display: flex;
+      align-items: baseline;
+      gap: var(--claude-space-4);
+      margin-bottom: var(--claude-space-3);
+    }
+
+    .type-token {
+      font-family: var(--claude-font-mono);
+      font-size: var(--claude-font-size-xs);
+      color: var(--claude-text-tertiary);
+      min-width: 200px;
+      flex-shrink: 0;
+    }
+
+    .type-sample {
+      color: var(--claude-text-primary);
+    }
+
+    /* ─── Spacing visual ─── */
+    .spacing-grid {
+      display: flex;
+      flex-direction: column;
+      gap: var(--claude-space-3);
+    }
+
+    .spacing-row {
+      display: flex;
+      align-items: center;
+      gap: var(--claude-space-4);
+    }
+
+    .spacing-label {
+      font-family: var(--claude-font-mono);
+      font-size: var(--claude-font-size-xs);
+      color: var(--claude-text-tertiary);
+      min-width: 160px;
+      flex-shrink: 0;
+    }
+
+    .spacing-bar {
+      height: 20px;
+      background: var(--claude-accent-subtle);
+      border: 1px solid var(--claude-accent);
+      border-radius: var(--claude-radius-sm);
+    }
+
+    /* ─── Icon grid ─── */
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+      gap: var(--claude-space-4);
+    }
+
+    .icon-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--claude-space-2);
+      padding: var(--claude-space-3);
+      border-radius: var(--claude-radius-sm);
+      transition: background var(--claude-transition-fast);
+    }
+
+    .icon-item:hover {
+      background: var(--claude-bg-hover);
+    }
+
+    .icon-item-name {
+      font-family: var(--claude-font-mono);
+      font-size: 10px;
+      color: var(--claude-text-tertiary);
+      text-align: center;
+    }
+
+    /* ─── Card grid ─── */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: var(--claude-space-4);
+    }
+
+    /* ─── Glow container ─── */
+    .glow-container {
+      position: relative;
+      height: 200px;
+      background: var(--claude-bg-secondary);
+      border: 1px solid var(--claude-border);
+      border-radius: var(--claude-radius-md);
+      overflow: hidden;
+    }
+
+    .glow-container-label {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      color: var(--claude-text-primary);
+      font-weight: var(--claude-font-weight-semibold);
+    }
+
+    /* ─── Input demo grid ─── */
+    .input-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: var(--claude-space-4);
+    }
+
+    /* ─── Skeleton demo ─── */
+    .skeleton-demo {
+      display: flex;
+      flex-direction: column;
+      gap: var(--claude-space-3);
+    }
+
+    .skeleton-row {
+      display: flex;
+      align-items: center;
+      gap: var(--claude-space-4);
+    }
+
+    /* ─── Responsive: collapse sidebar ─── */
+    @media (max-width: 768px) {
+      .layout claude-sidebar {
+        display: none;
+      }
+
+      .content {
+        padding: var(--claude-space-4);
+      }
+    }
+
+    /* ─── Nav brand styling ─── */
+    .brand-text {
+      font-size: var(--claude-font-size-lg);
+      font-weight: var(--claude-font-weight-bold);
+      color: var(--claude-text-primary);
+    }
+
+    .brand-text small {
+      font-size: var(--claude-font-size-xs);
+      color: var(--claude-text-tertiary);
+      font-weight: var(--claude-font-weight-normal);
+      margin-left: var(--claude-space-2);
+    }
+
+    /* ─── Tooltip demo row ─── */
+    .tooltip-demo-row {
+      display: flex;
+      justify-content: center;
+      gap: var(--claude-space-8);
+      padding: var(--claude-space-10) var(--claude-space-4);
+    }
+  </style>
+</head>
+<body>
+
+<claude-theme mode="dark">
+
+  <!-- ═══════════════════════════════════════════════
+       1. Top Nav
+       ═══════════════════════════════════════════════ -->
+  <claude-nav>
+    <span slot="brand" class="brand-text">Claude Design System <small>v0.1</small></span>
+    <div slot="actions">
+      <claude-toggle id="theme-toggle" label="Light mode"></claude-toggle>
+    </div>
+  </claude-nav>
+
+  <!-- ═══════════════════════════════════════════════
+       2. Hero
+       ═══════════════════════════════════════════════ -->
+  <claude-hero
+    title="Claude Design System"
+    subtitle="A framework-agnostic Web Components library inspired by Claude's design language"
+    gradient
+  >
+    <div slot="actions">
+      <claude-button variant="primary" size="lg">Get Started</claude-button>
+      <claude-button variant="secondary" size="lg">GitHub</claude-button>
+    </div>
+  </claude-hero>
+
+  <!-- ═══════════════════════════════════════════════
+       3. Main Layout: Sidebar + Content
+       ═══════════════════════════════════════════════ -->
+  <div class="layout">
+    <claude-sidebar>
+      <span slot="header" style="font-weight:600; color:var(--claude-text-primary); font-size:var(--claude-font-size-sm);">Components</span>
+
+      <claude-sidebar-group label="Foundation">
+        <claude-sidebar-item><a href="#colors" style="color:inherit; text-decoration:none;">Colors</a></claude-sidebar-item>
+        <claude-sidebar-item><a href="#typography" style="color:inherit; text-decoration:none;">Typography</a></claude-sidebar-item>
+        <claude-sidebar-item><a href="#spacing" style="color:inherit; text-decoration:none;">Spacing</a></claude-sidebar-item>
+      </claude-sidebar-group>
+
+      <claude-sidebar-group label="Basic">
+        <claude-sidebar-item icon="plus"><a href="#button" style="color:inherit; text-decoration:none;">Button</a></claude-sidebar-item>
+        <claude-sidebar-item><a href="#icon" style="color:inherit; text-decoration:none;">Icon</a></claude-sidebar-item>
+        <claude-sidebar-item><a href="#badge" style="color:inherit; text-decoration:none;">Badge</a></claude-sidebar-item>
+        <claude-sidebar-item><a href="#tag" style="color:inherit; text-decoration:none;">Tag</a></claude-sidebar-item>
+        <claude-sidebar-item><a href="#input" style="color:inherit; text-decoration:none;">Input</a></claude-sidebar-item>
+        <claude-sidebar-item><a href="#textarea" style="color:inherit; text-decoration:none;">Textarea</a></claude-sidebar-item>
+        <claude-sidebar-item><a href="#toggle" style="color:inherit; text-decoration:none;">Toggle</a></claude-sidebar-item>
+        <claude-sidebar-item><a href="#tooltip" style="color:inherit; text-decoration:none;">Tooltip</a></claude-sidebar-item>
+        <claude-sidebar-item><a href="#avatar" style="color:inherit; text-decoration:none;">Avatar</a></claude-sidebar-item>
+      </claude-sidebar-group>
+
+      <claude-sidebar-group label="Layout">
+        <claude-sidebar-item><a href="#divider" style="color:inherit; text-decoration:none;">Divider</a></claude-sidebar-item>
+        <claude-sidebar-item><a href="#card" style="color:inherit; text-decoration:none;">Card</a></claude-sidebar-item>
+        <claude-sidebar-item><a href="#modal" style="color:inherit; text-decoration:none;">Modal</a></claude-sidebar-item>
+        <claude-sidebar-item><a href="#tabs" style="color:inherit; text-decoration:none;">Tabs</a></claude-sidebar-item>
+        <claude-sidebar-item><a href="#sidebar" style="color:inherit; text-decoration:none;">Sidebar</a></claude-sidebar-item>
+        <claude-sidebar-item><a href="#nav" style="color:inherit; text-decoration:none;">Nav</a></claude-sidebar-item>
+      </claude-sidebar-group>
+
+      <claude-sidebar-group label="Advanced">
+        <claude-sidebar-item icon="code"><a href="#code-block" style="color:inherit; text-decoration:none;">Code Block</a></claude-sidebar-item>
+        <claude-sidebar-item icon="terminal"><a href="#terminal" style="color:inherit; text-decoration:none;">Terminal</a></claude-sidebar-item>
+        <claude-sidebar-item><a href="#hero" style="color:inherit; text-decoration:none;">Hero</a></claude-sidebar-item>
+        <claude-sidebar-item><a href="#glow" style="color:inherit; text-decoration:none;">Glow</a></claude-sidebar-item>
+        <claude-sidebar-item><a href="#skeleton" style="color:inherit; text-decoration:none;">Skeleton</a></claude-sidebar-item>
+        <claude-sidebar-item><a href="#toast" style="color:inherit; text-decoration:none;">Toast</a></claude-sidebar-item>
+      </claude-sidebar-group>
+    </claude-sidebar>
+
+    <main class="content">
+
+      <!-- ═══════════════════════════════════════════
+           FOUNDATION: Colors
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="colors">
+        <h2>Colors</h2>
+        <p>Design tokens for the color palette. All colors adapt between dark and light themes via CSS custom properties.</p>
+
+        <div class="preview">
+          <div class="color-grid">
+            <div class="color-swatch">
+              <div class="color-box" style="background: var(--claude-bg-primary);"></div>
+              <span class="color-name">--claude-bg-primary</span>
+            </div>
+            <div class="color-swatch">
+              <div class="color-box" style="background: var(--claude-bg-secondary);"></div>
+              <span class="color-name">--claude-bg-secondary</span>
+            </div>
+            <div class="color-swatch">
+              <div class="color-box" style="background: var(--claude-bg-elevated);"></div>
+              <span class="color-name">--claude-bg-elevated</span>
+            </div>
+            <div class="color-swatch">
+              <div class="color-box" style="background: var(--claude-bg-hover);"></div>
+              <span class="color-name">--claude-bg-hover</span>
+            </div>
+            <div class="color-swatch">
+              <div class="color-box" style="background: var(--claude-text-primary);"></div>
+              <span class="color-name">--claude-text-primary</span>
+            </div>
+            <div class="color-swatch">
+              <div class="color-box" style="background: var(--claude-text-secondary);"></div>
+              <span class="color-name">--claude-text-secondary</span>
+            </div>
+            <div class="color-swatch">
+              <div class="color-box" style="background: var(--claude-text-tertiary);"></div>
+              <span class="color-name">--claude-text-tertiary</span>
+            </div>
+            <div class="color-swatch">
+              <div class="color-box" style="background: var(--claude-accent);"></div>
+              <span class="color-name">--claude-accent</span>
+            </div>
+            <div class="color-swatch">
+              <div class="color-box" style="background: var(--claude-accent-hover);"></div>
+              <span class="color-name">--claude-accent-hover</span>
+            </div>
+            <div class="color-swatch">
+              <div class="color-box" style="background: var(--claude-accent-subtle);"></div>
+              <span class="color-name">--claude-accent-subtle</span>
+            </div>
+            <div class="color-swatch">
+              <div class="color-box" style="background: var(--claude-success);"></div>
+              <span class="color-name">--claude-success</span>
+            </div>
+            <div class="color-swatch">
+              <div class="color-box" style="background: var(--claude-warning);"></div>
+              <span class="color-name">--claude-warning</span>
+            </div>
+            <div class="color-swatch">
+              <div class="color-box" style="background: var(--claude-error);"></div>
+              <span class="color-name">--claude-error</span>
+            </div>
+            <div class="color-swatch">
+              <div class="color-box" style="background: var(--claude-info);"></div>
+              <span class="color-name">--claude-info</span>
+            </div>
+            <div class="color-swatch">
+              <div class="color-box" style="background: var(--claude-border); border: 2px solid var(--claude-border-strong);"></div>
+              <span class="color-name">--claude-border</span>
+            </div>
+            <div class="color-swatch">
+              <div class="color-box" style="background: var(--claude-border-strong);"></div>
+              <span class="color-name">--claude-border-strong</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <claude-divider></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           FOUNDATION: Typography
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="typography">
+        <h2>Typography</h2>
+        <p>Font sizes and families used throughout the design system.</p>
+
+        <div class="preview">
+          <div class="type-row">
+            <span class="type-token">--claude-font-size-3xl (3rem)</span>
+            <span class="type-sample" style="font-size: var(--claude-font-size-3xl);">Heading 3XL</span>
+          </div>
+          <div class="type-row">
+            <span class="type-token">--claude-font-size-2xl (2rem)</span>
+            <span class="type-sample" style="font-size: var(--claude-font-size-2xl);">Heading 2XL</span>
+          </div>
+          <div class="type-row">
+            <span class="type-token">--claude-font-size-xl (1.5rem)</span>
+            <span class="type-sample" style="font-size: var(--claude-font-size-xl);">Heading XL</span>
+          </div>
+          <div class="type-row">
+            <span class="type-token">--claude-font-size-lg (1.25rem)</span>
+            <span class="type-sample" style="font-size: var(--claude-font-size-lg);">Body Large</span>
+          </div>
+          <div class="type-row">
+            <span class="type-token">--claude-font-size-md (1rem)</span>
+            <span class="type-sample" style="font-size: var(--claude-font-size-md);">Body Medium</span>
+          </div>
+          <div class="type-row">
+            <span class="type-token">--claude-font-size-sm (0.875rem)</span>
+            <span class="type-sample" style="font-size: var(--claude-font-size-sm);">Body Small</span>
+          </div>
+          <div class="type-row">
+            <span class="type-token">--claude-font-size-xs (0.75rem)</span>
+            <span class="type-sample" style="font-size: var(--claude-font-size-xs);">Caption XS</span>
+          </div>
+
+          <div style="margin-top: var(--claude-space-6);">
+            <div class="type-row">
+              <span class="type-token">--claude-font-sans</span>
+              <span class="type-sample" style="font-family: var(--claude-font-sans);">The quick brown fox jumps over the lazy dog</span>
+            </div>
+            <div class="type-row">
+              <span class="type-token">--claude-font-mono</span>
+              <span class="type-sample" style="font-family: var(--claude-font-mono);">const x = () => 42;</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <claude-divider></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           FOUNDATION: Spacing
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="spacing">
+        <h2>Spacing</h2>
+        <p>Spacing tokens based on a 4px grid.</p>
+
+        <div class="preview">
+          <div class="spacing-grid">
+            <div class="spacing-row">
+              <span class="spacing-label">--claude-space-1 (4px)</span>
+              <div class="spacing-bar" style="width: 4px;"></div>
+            </div>
+            <div class="spacing-row">
+              <span class="spacing-label">--claude-space-2 (8px)</span>
+              <div class="spacing-bar" style="width: 8px;"></div>
+            </div>
+            <div class="spacing-row">
+              <span class="spacing-label">--claude-space-3 (12px)</span>
+              <div class="spacing-bar" style="width: 12px;"></div>
+            </div>
+            <div class="spacing-row">
+              <span class="spacing-label">--claude-space-4 (16px)</span>
+              <div class="spacing-bar" style="width: 16px;"></div>
+            </div>
+            <div class="spacing-row">
+              <span class="spacing-label">--claude-space-5 (20px)</span>
+              <div class="spacing-bar" style="width: 20px;"></div>
+            </div>
+            <div class="spacing-row">
+              <span class="spacing-label">--claude-space-6 (24px)</span>
+              <div class="spacing-bar" style="width: 24px;"></div>
+            </div>
+            <div class="spacing-row">
+              <span class="spacing-label">--claude-space-8 (32px)</span>
+              <div class="spacing-bar" style="width: 32px;"></div>
+            </div>
+            <div class="spacing-row">
+              <span class="spacing-label">--claude-space-10 (40px)</span>
+              <div class="spacing-bar" style="width: 40px;"></div>
+            </div>
+            <div class="spacing-row">
+              <span class="spacing-label">--claude-space-12 (48px)</span>
+              <div class="spacing-bar" style="width: 48px;"></div>
+            </div>
+            <div class="spacing-row">
+              <span class="spacing-label">--claude-space-16 (64px)</span>
+              <div class="spacing-bar" style="width: 64px;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <claude-divider text="Basic Components"></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           BASIC: Button
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="button">
+        <h2>Button</h2>
+        <p>Multi-variant button component with loading and disabled states.</p>
+
+        <div class="preview">
+          <h3>Variants x Sizes</h3>
+
+          <div class="preview-row">
+            <span class="preview-label">Primary</span>
+            <claude-button variant="primary" size="sm">Small</claude-button>
+            <claude-button variant="primary" size="md">Medium</claude-button>
+            <claude-button variant="primary" size="lg">Large</claude-button>
+          </div>
+
+          <div class="preview-row">
+            <span class="preview-label">Secondary</span>
+            <claude-button variant="secondary" size="sm">Small</claude-button>
+            <claude-button variant="secondary" size="md">Medium</claude-button>
+            <claude-button variant="secondary" size="lg">Large</claude-button>
+          </div>
+
+          <div class="preview-row">
+            <span class="preview-label">Ghost</span>
+            <claude-button variant="ghost" size="sm">Small</claude-button>
+            <claude-button variant="ghost" size="md">Medium</claude-button>
+            <claude-button variant="ghost" size="lg">Large</claude-button>
+          </div>
+
+          <div class="preview-row">
+            <span class="preview-label">Danger</span>
+            <claude-button variant="danger" size="sm">Small</claude-button>
+            <claude-button variant="danger" size="md">Medium</claude-button>
+            <claude-button variant="danger" size="lg">Large</claude-button>
+          </div>
+
+          <h3>States</h3>
+          <div class="preview-row">
+            <span class="preview-label">Disabled</span>
+            <claude-button variant="primary" disabled>Disabled</claude-button>
+            <claude-button variant="secondary" disabled>Disabled</claude-button>
+          </div>
+          <div class="preview-row">
+            <span class="preview-label">Loading</span>
+            <claude-button variant="primary" loading>Loading</claude-button>
+            <claude-button variant="secondary" loading>Loading</claude-button>
+          </div>
+
+          <h3>With Icons</h3>
+          <div class="preview-row">
+            <claude-button variant="primary">
+              <claude-icon slot="prefix" name="plus" size="sm"></claude-icon>
+              Add Item
+            </claude-button>
+            <claude-button variant="secondary">
+              Open Link
+              <claude-icon slot="suffix" name="external-link" size="sm"></claude-icon>
+            </claude-button>
+          </div>
+        </div>
+
+        <table class="props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>variant</code></td><td>String</td><td><code>primary</code></td><td>primary | secondary | ghost | danger</td></tr>
+            <tr><td><code>size</code></td><td>String</td><td><code>md</code></td><td>sm | md | lg</td></tr>
+            <tr><td><code>disabled</code></td><td>Boolean</td><td><code>false</code></td><td>Disables interaction</td></tr>
+            <tr><td><code>loading</code></td><td>Boolean</td><td><code>false</code></td><td>Shows spinner and disables interaction</td></tr>
+            <tr><td><code>full-width</code></td><td>Boolean</td><td><code>false</code></td><td>Stretches to 100% width</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <claude-divider></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           BASIC: Icon
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="icon">
+        <h2>Icon</h2>
+        <p>Inline SVG icon component with a built-in icon set. 15 icons available.</p>
+
+        <div class="preview">
+          <div class="icon-grid">
+            <div class="icon-item">
+              <claude-icon name="copy" size="md"></claude-icon>
+              <span class="icon-item-name">copy</span>
+            </div>
+            <div class="icon-item">
+              <claude-icon name="check" size="md"></claude-icon>
+              <span class="icon-item-name">check</span>
+            </div>
+            <div class="icon-item">
+              <claude-icon name="close" size="md"></claude-icon>
+              <span class="icon-item-name">close</span>
+            </div>
+            <div class="icon-item">
+              <claude-icon name="chevron-down" size="md"></claude-icon>
+              <span class="icon-item-name">chevron-down</span>
+            </div>
+            <div class="icon-item">
+              <claude-icon name="chevron-right" size="md"></claude-icon>
+              <span class="icon-item-name">chevron-right</span>
+            </div>
+            <div class="icon-item">
+              <claude-icon name="search" size="md"></claude-icon>
+              <span class="icon-item-name">search</span>
+            </div>
+            <div class="icon-item">
+              <claude-icon name="sun" size="md"></claude-icon>
+              <span class="icon-item-name">sun</span>
+            </div>
+            <div class="icon-item">
+              <claude-icon name="moon" size="md"></claude-icon>
+              <span class="icon-item-name">moon</span>
+            </div>
+            <div class="icon-item">
+              <claude-icon name="terminal" size="md"></claude-icon>
+              <span class="icon-item-name">terminal</span>
+            </div>
+            <div class="icon-item">
+              <claude-icon name="code" size="md"></claude-icon>
+              <span class="icon-item-name">code</span>
+            </div>
+            <div class="icon-item">
+              <claude-icon name="plus" size="md"></claude-icon>
+              <span class="icon-item-name">plus</span>
+            </div>
+            <div class="icon-item">
+              <claude-icon name="minus" size="md"></claude-icon>
+              <span class="icon-item-name">minus</span>
+            </div>
+            <div class="icon-item">
+              <claude-icon name="menu" size="md"></claude-icon>
+              <span class="icon-item-name">menu</span>
+            </div>
+            <div class="icon-item">
+              <claude-icon name="external-link" size="md"></claude-icon>
+              <span class="icon-item-name">external-link</span>
+            </div>
+            <div class="icon-item">
+              <claude-icon name="loading" size="md"></claude-icon>
+              <span class="icon-item-name">loading</span>
+            </div>
+          </div>
+        </div>
+
+        <table class="props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>name</code></td><td>String</td><td><code>''</code></td><td>Icon name from the built-in set</td></tr>
+            <tr><td><code>size</code></td><td>String</td><td><code>md</code></td><td>sm (16px) | md (20px) | lg (24px)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <claude-divider></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           BASIC: Badge
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="badge">
+        <h2>Badge</h2>
+        <p>Pill-shaped status badge with optional dot indicator.</p>
+
+        <div class="preview">
+          <h3>Variants</h3>
+          <div class="preview-row">
+            <claude-badge variant="default">Default</claude-badge>
+            <claude-badge variant="info">Info</claude-badge>
+            <claude-badge variant="success">Success</claude-badge>
+            <claude-badge variant="warning">Warning</claude-badge>
+            <claude-badge variant="error">Error</claude-badge>
+          </div>
+
+          <h3>With Dot</h3>
+          <div class="preview-row">
+            <claude-badge variant="default" dot>Default</claude-badge>
+            <claude-badge variant="info" dot>Info</claude-badge>
+            <claude-badge variant="success" dot>Success</claude-badge>
+            <claude-badge variant="warning" dot>Warning</claude-badge>
+            <claude-badge variant="error" dot>Error</claude-badge>
+          </div>
+
+          <h3>Sizes</h3>
+          <div class="preview-row">
+            <claude-badge variant="info" size="sm">Small</claude-badge>
+            <claude-badge variant="info" size="md">Medium</claude-badge>
+          </div>
+        </div>
+
+        <table class="props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>variant</code></td><td>String</td><td><code>default</code></td><td>default | info | success | warning | error</td></tr>
+            <tr><td><code>size</code></td><td>String</td><td><code>md</code></td><td>sm | md</td></tr>
+            <tr><td><code>dot</code></td><td>Boolean</td><td><code>false</code></td><td>Shows a colored dot before text</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <claude-divider></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           BASIC: Tag
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="tag">
+        <h2>Tag</h2>
+        <p>Compact label, optionally removable. Fires <code>claude-remove</code> when the close button is clicked.</p>
+
+        <div class="preview">
+          <div class="preview-row">
+            <claude-tag>Default</claude-tag>
+            <claude-tag variant="accent">Accent</claude-tag>
+            <claude-tag removable>Removable</claude-tag>
+            <claude-tag variant="accent" removable>Accent + Removable</claude-tag>
+          </div>
+        </div>
+
+        <table class="props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>variant</code></td><td>String</td><td><code>default</code></td><td>default | accent</td></tr>
+            <tr><td><code>removable</code></td><td>Boolean</td><td><code>false</code></td><td>Shows a close (x) button</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <claude-divider></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           BASIC: Input
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="input">
+        <h2>Input</h2>
+        <p>Styled text input with label, helper text, and error state.</p>
+
+        <div class="preview">
+          <div class="input-grid">
+            <claude-input placeholder="Basic input"></claude-input>
+            <claude-input label="Full Name" placeholder="Enter your name" helper="Your legal name as it appears on your ID"></claude-input>
+            <claude-input label="Email" placeholder="user@example.com" error="Invalid email address" type="email"></claude-input>
+            <claude-input label="Disabled" placeholder="Cannot type here" disabled></claude-input>
+          </div>
+        </div>
+
+        <table class="props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>type</code></td><td>String</td><td><code>text</code></td><td>text | email | password | number | search</td></tr>
+            <tr><td><code>label</code></td><td>String</td><td><code>''</code></td><td>Label text above the input</td></tr>
+            <tr><td><code>placeholder</code></td><td>String</td><td><code>''</code></td><td>Placeholder text</td></tr>
+            <tr><td><code>value</code></td><td>String</td><td><code>''</code></td><td>Current value</td></tr>
+            <tr><td><code>error</code></td><td>String</td><td><code>''</code></td><td>Error message (activates error styling)</td></tr>
+            <tr><td><code>helper</code></td><td>String</td><td><code>''</code></td><td>Helper text below the input</td></tr>
+            <tr><td><code>disabled</code></td><td>Boolean</td><td><code>false</code></td><td>Disables the input</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <claude-divider></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           BASIC: Textarea
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="textarea">
+        <h2>Textarea</h2>
+        <p>Multi-line text area with optional auto-resize behavior.</p>
+
+        <div class="preview">
+          <div class="input-grid">
+            <claude-textarea label="Message" placeholder="Type something..." rows="3"></claude-textarea>
+            <claude-textarea label="Auto-resize" placeholder="Start typing to see the textarea grow..." auto-resize rows="2"></claude-textarea>
+          </div>
+        </div>
+
+        <table class="props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>label</code></td><td>String</td><td><code>''</code></td><td>Label text</td></tr>
+            <tr><td><code>placeholder</code></td><td>String</td><td><code>''</code></td><td>Placeholder text</td></tr>
+            <tr><td><code>rows</code></td><td>Number</td><td><code>3</code></td><td>Visible rows</td></tr>
+            <tr><td><code>auto-resize</code></td><td>Boolean</td><td><code>false</code></td><td>Auto-grow to fit content</td></tr>
+            <tr><td><code>resize</code></td><td>String</td><td><code>vertical</code></td><td>CSS resize: none | vertical | both</td></tr>
+            <tr><td><code>error</code></td><td>String</td><td><code>''</code></td><td>Error message</td></tr>
+            <tr><td><code>disabled</code></td><td>Boolean</td><td><code>false</code></td><td>Disables the textarea</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <claude-divider></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           BASIC: Toggle
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="toggle">
+        <h2>Toggle</h2>
+        <p>Accessible toggle switch with spring animation. Fires <code>claude-change</code> with <code>{ checked }</code>.</p>
+
+        <div class="preview">
+          <h3>States</h3>
+          <div class="preview-row">
+            <claude-toggle label="Unchecked"></claude-toggle>
+            <claude-toggle checked label="Checked"></claude-toggle>
+            <claude-toggle disabled label="Disabled"></claude-toggle>
+            <claude-toggle checked disabled label="Checked + Disabled"></claude-toggle>
+          </div>
+
+          <h3>Sizes</h3>
+          <div class="preview-row">
+            <claude-toggle size="sm" label="Small"></claude-toggle>
+            <claude-toggle size="md" label="Medium"></claude-toggle>
+          </div>
+        </div>
+
+        <table class="props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>checked</code></td><td>Boolean</td><td><code>false</code></td><td>Toggle state</td></tr>
+            <tr><td><code>disabled</code></td><td>Boolean</td><td><code>false</code></td><td>Disables interaction</td></tr>
+            <tr><td><code>label</code></td><td>String</td><td><code>''</code></td><td>Label text</td></tr>
+            <tr><td><code>size</code></td><td>String</td><td><code>md</code></td><td>sm | md</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <claude-divider></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           BASIC: Tooltip
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="tooltip">
+        <h2>Tooltip</h2>
+        <p>Shows descriptive text on hover or focus. Supports four positions.</p>
+
+        <div class="preview">
+          <div class="tooltip-demo-row">
+            <claude-tooltip text="Tooltip on top" position="top">
+              <claude-button variant="secondary" size="sm">Top</claude-button>
+            </claude-tooltip>
+            <claude-tooltip text="Tooltip on bottom" position="bottom">
+              <claude-button variant="secondary" size="sm">Bottom</claude-button>
+            </claude-tooltip>
+            <claude-tooltip text="Tooltip on left" position="left">
+              <claude-button variant="secondary" size="sm">Left</claude-button>
+            </claude-tooltip>
+            <claude-tooltip text="Tooltip on right" position="right">
+              <claude-button variant="secondary" size="sm">Right</claude-button>
+            </claude-tooltip>
+          </div>
+        </div>
+
+        <table class="props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>text</code></td><td>String</td><td><code>''</code></td><td>Tooltip text to display</td></tr>
+            <tr><td><code>position</code></td><td>String</td><td><code>top</code></td><td>top | bottom | left | right</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <claude-divider></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           BASIC: Avatar
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="avatar">
+        <h2>Avatar</h2>
+        <p>Circular avatar with image source or initials fallback.</p>
+
+        <div class="preview">
+          <h3>Sizes</h3>
+          <div class="preview-row">
+            <claude-avatar initials="SM" size="sm"></claude-avatar>
+            <claude-avatar initials="MD" size="md"></claude-avatar>
+            <claude-avatar initials="LG" size="lg"></claude-avatar>
+          </div>
+
+          <h3>With Image</h3>
+          <div class="preview-row">
+            <claude-avatar src="https://api.dicebear.com/7.x/shapes/svg?seed=claude" size="sm"></claude-avatar>
+            <claude-avatar src="https://api.dicebear.com/7.x/shapes/svg?seed=claude" size="md"></claude-avatar>
+            <claude-avatar src="https://api.dicebear.com/7.x/shapes/svg?seed=claude" size="lg"></claude-avatar>
+          </div>
+
+          <h3>Initials Fallback</h3>
+          <div class="preview-row">
+            <claude-avatar initials="A" size="md"></claude-avatar>
+            <claude-avatar initials="CL" size="md"></claude-avatar>
+            <claude-avatar initials="DS" size="md"></claude-avatar>
+          </div>
+        </div>
+
+        <table class="props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>src</code></td><td>String</td><td><code>''</code></td><td>Image URL</td></tr>
+            <tr><td><code>initials</code></td><td>String</td><td><code>''</code></td><td>Fallback initials (1-2 chars)</td></tr>
+            <tr><td><code>size</code></td><td>String</td><td><code>md</code></td><td>sm (32px) | md (40px) | lg (56px)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <claude-divider text="Layout Components"></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           LAYOUT: Divider
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="divider">
+        <h2>Divider</h2>
+        <p>Horizontal divider, optionally with centered text label.</p>
+
+        <div class="preview">
+          <p style="color: var(--claude-text-secondary); margin-bottom: var(--claude-space-4);">Plain divider:</p>
+          <claude-divider></claude-divider>
+
+          <p style="color: var(--claude-text-secondary); margin-bottom: var(--claude-space-4);">With text:</p>
+          <claude-divider text="Section Break"></claude-divider>
+
+          <p style="color: var(--claude-text-secondary); margin-bottom: var(--claude-space-4);">Spacing variants:</p>
+          <claude-divider spacing="sm" text="Small"></claude-divider>
+          <claude-divider spacing="md" text="Medium"></claude-divider>
+          <claude-divider spacing="lg" text="Large"></claude-divider>
+        </div>
+
+        <table class="props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>text</code></td><td>String</td><td><code>''</code></td><td>Optional label text</td></tr>
+            <tr><td><code>spacing</code></td><td>String</td><td><code>md</code></td><td>sm | md | lg</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <claude-divider></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           LAYOUT: Card
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="card">
+        <h2>Card</h2>
+        <p>Container card with optional header/footer and four elevation levels.</p>
+
+        <div class="preview">
+          <h3>Elevations</h3>
+          <div class="card-grid">
+            <claude-card elevation="0">
+              <span slot="header"><strong>Elevation 0</strong></span>
+              No shadow
+            </claude-card>
+            <claude-card elevation="1">
+              <span slot="header"><strong>Elevation 1</strong></span>
+              Small shadow (default)
+            </claude-card>
+            <claude-card elevation="2">
+              <span slot="header"><strong>Elevation 2</strong></span>
+              Medium shadow
+            </claude-card>
+            <claude-card elevation="3">
+              <span slot="header"><strong>Elevation 3</strong></span>
+              Large shadow
+            </claude-card>
+          </div>
+
+          <h3>Interactive Card</h3>
+          <div style="max-width: 300px;">
+            <claude-card interactive elevation="2">
+              <span slot="header"><strong>Hover me</strong></span>
+              This card lifts on hover.
+              <div slot="footer" style="text-align: right;">
+                <claude-button variant="ghost" size="sm">Learn More</claude-button>
+              </div>
+            </claude-card>
+          </div>
+        </div>
+
+        <table class="props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>elevation</code></td><td>String</td><td><code>1</code></td><td>0 | 1 | 2 | 3</td></tr>
+            <tr><td><code>interactive</code></td><td>Boolean</td><td><code>false</code></td><td>Adds hover lift effect</td></tr>
+            <tr><td><code>padding</code></td><td>String</td><td><code>md</code></td><td>none | sm | md | lg</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <claude-divider></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           LAYOUT: Modal
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="modal">
+        <h2>Modal</h2>
+        <p>Dialog overlay with backdrop blur, focus trap, and open/close animation.</p>
+
+        <div class="preview">
+          <claude-button variant="primary" id="open-modal-btn">Open Modal</claude-button>
+
+          <claude-modal id="demo-modal">
+            <span slot="title">Example Modal</span>
+            <p>This is the modal body content. It supports any HTML or Web Components inside.</p>
+            <p style="margin-top: var(--claude-space-3); color: var(--claude-text-secondary);">Press Escape or click the backdrop to close.</p>
+            <div slot="actions">
+              <claude-button variant="ghost" id="modal-cancel-btn">Cancel</claude-button>
+              <claude-button variant="primary" id="modal-confirm-btn">Confirm</claude-button>
+            </div>
+          </claude-modal>
+        </div>
+
+        <table class="props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>open</code></td><td>Boolean</td><td><code>false</code></td><td>Whether the modal is visible</td></tr>
+            <tr><td><code>size</code></td><td>String</td><td><code>md</code></td><td>sm (400px) | md (560px) | lg (720px)</td></tr>
+            <tr><td><code>closable</code></td><td>Boolean</td><td><code>true</code></td><td>Show close button and allow backdrop close</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <claude-divider></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           LAYOUT: Tabs
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="tabs">
+        <h2>Tabs</h2>
+        <p>Tab container with sliding indicator animation. Fires <code>claude-tab-change</code> on switch.</p>
+
+        <div class="preview">
+          <claude-tabs>
+            <claude-tab label="Overview" active>
+              <p>This is the <strong>Overview</strong> tab content. Tabs manage child <code>&lt;claude-tab&gt;</code> elements and render a tab bar from their labels.</p>
+            </claude-tab>
+            <claude-tab label="Installation">
+              <p>Install the Claude Design System via npm:</p>
+              <claude-code language="bash" style="margin-top: var(--claude-space-3);">npm install claude-design-system</claude-code>
+            </claude-tab>
+            <claude-tab label="Usage">
+              <p>Import the library and use any component:</p>
+              <claude-code language="html" style="margin-top: var(--claude-space-3);">&lt;script type="module" src="claude-design-system.es.js"&gt;&lt;/script&gt;
+&lt;claude-button variant="primary"&gt;Click me&lt;/claude-button&gt;</claude-code>
+            </claude-tab>
+          </claude-tabs>
+        </div>
+
+        <table class="props-table">
+          <thead>
+            <tr><th>Component</th><th>Prop</th><th>Type</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>claude-tab</code></td><td><code>label</code></td><td>String</td><td>Tab button text</td></tr>
+            <tr><td><code>claude-tab</code></td><td><code>active</code></td><td>Boolean</td><td>Whether this tab is initially active</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <claude-divider></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           LAYOUT: Sidebar
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="sidebar">
+        <h2>Sidebar</h2>
+        <p>Collapsible sidebar navigation with item and group sub-components. The sidebar on this page is a live demo.</p>
+
+        <div class="preview">
+          <p style="color: var(--claude-text-secondary);">The sidebar on the left side of this page demonstrates <code>&lt;claude-sidebar&gt;</code>, <code>&lt;claude-sidebar-group&gt;</code>, and <code>&lt;claude-sidebar-item&gt;</code> components in action.</p>
+        </div>
+
+        <table class="props-table">
+          <thead>
+            <tr><th>Component</th><th>Prop</th><th>Type</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>claude-sidebar</code></td><td><code>collapsed</code></td><td>Boolean</td><td>Shrinks to icon-only width</td></tr>
+            <tr><td><code>claude-sidebar</code></td><td><code>width</code></td><td>String</td><td>Custom width (default: 260px)</td></tr>
+            <tr><td><code>claude-sidebar-item</code></td><td><code>active</code></td><td>Boolean</td><td>Active/selected state</td></tr>
+            <tr><td><code>claude-sidebar-item</code></td><td><code>icon</code></td><td>String</td><td>Icon name</td></tr>
+            <tr><td><code>claude-sidebar-group</code></td><td><code>label</code></td><td>String</td><td>Group header text</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <claude-divider></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           LAYOUT: Nav
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="nav">
+        <h2>Nav</h2>
+        <p>Top navigation bar with brand, center content, and actions slots. The nav at the top of this page is a live demo.</p>
+
+        <div class="preview">
+          <p style="color: var(--claude-text-secondary);">The navigation bar at the top of this page demonstrates <code>&lt;claude-nav&gt;</code> with brand and actions slots.</p>
+
+          <h3>Nav Items</h3>
+          <div style="border: 1px solid var(--claude-border); border-radius: var(--claude-radius-md); overflow: hidden;">
+            <claude-nav>
+              <span slot="brand" style="font-weight: 600; color: var(--claude-text-primary);">Demo Nav</span>
+              <claude-nav-item active>Home</claude-nav-item>
+              <claude-nav-item>Docs</claude-nav-item>
+              <claude-nav-item>Examples</claude-nav-item>
+              <div slot="actions">
+                <claude-button variant="ghost" size="sm">
+                  <claude-icon name="search" size="sm"></claude-icon>
+                </claude-button>
+              </div>
+            </claude-nav>
+          </div>
+        </div>
+
+        <table class="props-table">
+          <thead>
+            <tr><th>Component</th><th>Prop</th><th>Type</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>claude-nav</code></td><td colspan="3">Slots: brand, default (center), actions</td></tr>
+            <tr><td><code>claude-nav-item</code></td><td><code>active</code></td><td>Boolean</td><td>Active state with accent underline</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <claude-divider text="Advanced Components"></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           ADVANCED: Code Block
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="code-block">
+        <h2>Code Block</h2>
+        <p>Syntax-highlighted code block with line numbers and copy-to-clipboard support.</p>
+
+        <div class="preview">
+          <claude-code language="javascript" line-numbers copyable title="example.js">// Claude Design System usage
+import 'claude-design-system';
+
+const theme = document.querySelector('claude-theme');
+theme.mode = 'dark';
+
+function greet(name) {
+  const message = `Hello, ${name}!`;
+  console.log(message);
+  return true;
+}</claude-code>
+        </div>
+
+        <table class="props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>language</code></td><td>String</td><td><code>''</code></td><td>Language name (e.g. javascript)</td></tr>
+            <tr><td><code>line-numbers</code></td><td>Boolean</td><td><code>false</code></td><td>Show line number gutter</td></tr>
+            <tr><td><code>copyable</code></td><td>Boolean</td><td><code>true</code></td><td>Show copy-to-clipboard button</td></tr>
+            <tr><td><code>title</code></td><td>String</td><td><code>''</code></td><td>Title in the top bar</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <claude-divider></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           ADVANCED: Terminal
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="terminal">
+        <h2>Terminal</h2>
+        <p>macOS-style terminal window with animated typing support.</p>
+
+        <div class="preview">
+          <claude-terminal title="claude-terminal" animated typing-speed="40">
+            <claude-terminal-line prompt="$">npm install claude-design-system</claude-terminal-line>
+            <claude-terminal-line type="output">added 3 packages in 1.2s</claude-terminal-line>
+            <claude-terminal-line prompt="$">npm run build</claude-terminal-line>
+            <claude-terminal-line type="output">vite v6.0.0 building for production...</claude-terminal-line>
+            <claude-terminal-line type="output">dist/claude-design-system.es.js  42.5 kB | gzip: 12.1 kB</claude-terminal-line>
+            <claude-terminal-line prompt="$" cursor></claude-terminal-line>
+          </claude-terminal>
+        </div>
+
+        <table class="props-table">
+          <thead>
+            <tr><th>Component</th><th>Prop</th><th>Type</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>claude-terminal</code></td><td><code>title</code></td><td>String</td><td>Window title (default: Terminal)</td></tr>
+            <tr><td><code>claude-terminal</code></td><td><code>typing-speed</code></td><td>Number</td><td>Typing speed in ms (default: 50)</td></tr>
+            <tr><td><code>claude-terminal</code></td><td><code>animated</code></td><td>Boolean</td><td>Enable typing animation</td></tr>
+            <tr><td><code>claude-terminal-line</code></td><td><code>prompt</code></td><td>String</td><td>Prompt character (e.g. $)</td></tr>
+            <tr><td><code>claude-terminal-line</code></td><td><code>type</code></td><td>String</td><td>command | output</td></tr>
+            <tr><td><code>claude-terminal-line</code></td><td><code>cursor</code></td><td>Boolean</td><td>Show blinking cursor</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <claude-divider></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           ADVANCED: Hero
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="hero">
+        <h2>Hero</h2>
+        <p>Hero section with title, subtitle, optional gradient backdrop, and action slot. The hero at the top of this page is a live demo.</p>
+
+        <div class="preview">
+          <p style="color: var(--claude-text-secondary);">The hero section at the top of this page demonstrates <code>&lt;claude-hero&gt;</code> with gradient backdrop and action buttons.</p>
+        </div>
+
+        <table class="props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>title</code></td><td>String</td><td><code>''</code></td><td>Main heading text</td></tr>
+            <tr><td><code>subtitle</code></td><td>String</td><td><code>''</code></td><td>Sub-heading text</td></tr>
+            <tr><td><code>gradient</code></td><td>Boolean</td><td><code>true</code></td><td>Show radial gradient backdrop</td></tr>
+            <tr><td><code>align</code></td><td>String</td><td><code>center</code></td><td>center | left</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <claude-divider></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           ADVANCED: Glow
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="glow">
+        <h2>Glow</h2>
+        <p>Decorative glowing radial gradient orb for visual flair. Supports position, intensity, and animation.</p>
+
+        <div class="preview">
+          <div class="glow-container">
+            <claude-glow position="center" intensity="strong" animated></claude-glow>
+            <span class="glow-container-label">Animated Glow Orb</span>
+          </div>
+        </div>
+
+        <table class="props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>position</code></td><td>String</td><td><code>top-right</code></td><td>top-left | top-right | bottom-left | bottom-right | center</td></tr>
+            <tr><td><code>intensity</code></td><td>String</td><td><code>medium</code></td><td>subtle | medium | strong</td></tr>
+            <tr><td><code>animated</code></td><td>Boolean</td><td><code>false</code></td><td>Enable pulse animation</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <claude-divider></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           ADVANCED: Skeleton
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="skeleton">
+        <h2>Skeleton</h2>
+        <p>Placeholder loading skeleton with shimmer animation. Three variants: line, circle, rect.</p>
+
+        <div class="preview">
+          <div class="skeleton-demo">
+            <h3>Line</h3>
+            <claude-skeleton variant="line" width="100%" height="16px"></claude-skeleton>
+            <claude-skeleton variant="line" width="80%" height="16px"></claude-skeleton>
+            <claude-skeleton variant="line" width="60%" height="16px"></claude-skeleton>
+
+            <h3>Circle</h3>
+            <div class="skeleton-row">
+              <claude-skeleton variant="circle" height="40px"></claude-skeleton>
+              <claude-skeleton variant="circle" height="56px"></claude-skeleton>
+              <claude-skeleton variant="circle" height="32px"></claude-skeleton>
+            </div>
+
+            <h3>Rect</h3>
+            <claude-skeleton variant="rect" width="100%" height="120px"></claude-skeleton>
+
+            <h3>Card-like Composition</h3>
+            <div class="skeleton-row">
+              <claude-skeleton variant="circle" height="48px"></claude-skeleton>
+              <div style="flex: 1; display: flex; flex-direction: column; gap: var(--claude-space-2);">
+                <claude-skeleton variant="line" width="40%" height="14px"></claude-skeleton>
+                <claude-skeleton variant="line" width="70%" height="12px"></claude-skeleton>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <table class="props-table">
+          <thead>
+            <tr><th>Prop</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>variant</code></td><td>String</td><td><code>line</code></td><td>line | circle | rect</td></tr>
+            <tr><td><code>width</code></td><td>String</td><td><code>100%</code></td><td>CSS width</td></tr>
+            <tr><td><code>height</code></td><td>String</td><td><code>16px</code></td><td>CSS height</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <claude-divider></claude-divider>
+
+      <!-- ═══════════════════════════════════════════
+           ADVANCED: Toast
+           ═══════════════════════════════════════════ -->
+      <div class="section" id="toast">
+        <h2>Toast</h2>
+        <p>Toast notification system via the <code>&lt;claude-toaster&gt;</code> element's JavaScript API. Call <code>.show()</code> to trigger a notification.</p>
+
+        <div class="preview">
+          <div class="preview-row">
+            <claude-button variant="ghost" id="toast-default-btn">Default Toast</claude-button>
+            <claude-button variant="primary" id="toast-success-btn">
+              <claude-icon slot="prefix" name="check" size="sm"></claude-icon>
+              Success
+            </claude-button>
+            <claude-button variant="danger" id="toast-error-btn">Error Toast</claude-button>
+            <claude-button variant="secondary" id="toast-warning-btn">Warning Toast</claude-button>
+          </div>
+        </div>
+
+        <table class="props-table">
+          <thead>
+            <tr><th>Prop / Method</th><th>Type</th><th>Default</th><th>Description</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><code>position</code></td><td>String</td><td><code>bottom-right</code></td><td>top-right | top-left | bottom-right | bottom-left</td></tr>
+            <tr><td><code>max</code></td><td>Number</td><td><code>5</code></td><td>Maximum visible toasts</td></tr>
+            <tr><td><code>.show({ message, variant, duration })</code></td><td>Method</td><td>-</td><td>Show a toast notification</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Toast container (placed once) -->
+      <claude-toaster id="toaster" position="bottom-right"></claude-toaster>
+
+    </main>
+  </div>
+
+</claude-theme>
+
+<!-- ═══════════════════════════════════════════════
+     Scripts
+     ═══════════════════════════════════════════════ -->
+<script>
+  // Theme toggle
+  const toggle = document.getElementById('theme-toggle');
+  const theme = document.querySelector('claude-theme');
+  toggle.addEventListener('claude-change', (e) => {
+    theme.mode = e.detail.checked ? 'light' : 'dark';
+  });
+
+  // Modal open/close
+  const openModalBtn = document.getElementById('open-modal-btn');
+  const demoModal = document.getElementById('demo-modal');
+  const modalCancelBtn = document.getElementById('modal-cancel-btn');
+  const modalConfirmBtn = document.getElementById('modal-confirm-btn');
+
+  openModalBtn.addEventListener('click', () => {
+    demoModal.open = true;
+  });
+  modalCancelBtn.addEventListener('click', () => {
+    demoModal.open = false;
+  });
+  modalConfirmBtn.addEventListener('click', () => {
+    demoModal.open = false;
+    const toaster = document.getElementById('toaster');
+    toaster.show({ message: 'Modal confirmed!', variant: 'success', duration: 3000 });
+  });
+
+  // Toast buttons
+  const toaster = document.getElementById('toaster');
+
+  document.getElementById('toast-default-btn').addEventListener('click', () => {
+    toaster.show({ message: 'This is a default notification.', variant: 'default', duration: 4000 });
+  });
+  document.getElementById('toast-success-btn').addEventListener('click', () => {
+    toaster.show({ message: 'Operation completed successfully!', variant: 'success', duration: 4000 });
+  });
+  document.getElementById('toast-error-btn').addEventListener('click', () => {
+    toaster.show({ message: 'Something went wrong. Please try again.', variant: 'error', duration: 4000 });
+  });
+  document.getElementById('toast-warning-btn').addEventListener('click', () => {
+    toaster.show({ message: 'Warning: This action cannot be undone.', variant: 'warning', duration: 4000 });
+  });
+</script>
+
+</body>
+</html>
